@@ -1,0 +1,59 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+
+service EventServer {
+
+    rpc NotifyLocationEvent(LocationEvent) returns (google.protobuf.Empty);
+    rpc NotifySensorEvent(SensorEvent) returns (google.protobuf.Empty);
+    rpc GetLatestEvents(google.protobuf.Empty) returns (stream Event);
+    rpc GetMinimumEvents(google.protobuf.Empty) returns (stream Event);
+    rpc GetMaximumEvents(google.protobuf.Empty) returns (stream Event);
+    rpc GetUnknownEvents(google.protobuf.Empty) returns (stream Event);
+    rpc ClearUnknownEvents(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc GetLocations(google.protobuf.Empty) returns (stream Location);
+    rpc GetLocationEvents(Location) returns (stream Event);
+    rpc GetSummaryEvents(google.protobuf.Empty) returns (stream Event);
+    rpc GetAllEvents(google.protobuf.Empty) returns (stream Event);
+    rpc DeleteSensor(SensorId) returns (google.protobuf.Empty);
+    rpc ConfigSensor(SensorConfig) returns (google.protobuf.Empty);
+    rpc DeleteClimeMetSensors(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc DeleteUnseenSensors(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc GetSensorInfo(google.protobuf.Empty) returns (stream SensorInfo);
+}
+
+message Location {
+    string Location = 1;
+    string MeasType = 2;
+}
+
+message LocationEvent {
+    string Location = 1;
+    string MeasType = 2;
+    string MeasValue = 3; 
+}
+
+message SensorEvent {
+    string Sensor = 1;
+    string MeasType = 2;
+    string MeasValue = 3; 
+}
+
+message Event {
+    string DateTime = 1;
+    string Location = 2;
+    string MeasType = 3;
+    string MeasValue = 4; 
+}
+
+message SensorId {
+    string SensorId = 1;
+}
+message SensorConfig {
+    string SensorId = 1;
+    string Location = 2;
+}
+message SensorInfo {
+    string SensorId = 1;
+    string Location = 2;
+    string LastSeen = 3;
+}
