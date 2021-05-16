@@ -9,7 +9,6 @@ import dsws_pb2
 import dsws_pb2_grpc
 from pathlib import Path
 
-from Cache import Cache
 from Database import Database
 from Event import Event
 
