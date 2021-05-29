@@ -73,8 +73,13 @@ class Database:
 
     def createSensor(self,sensorId,location):
         locationId = self.getLocationId(location)
+        query=f"INSERT INTO sensors VALUES(\"{sensorId}\",\"{locationId}\");"
+        self.logger.info(query)
         try:
-            self.cursor.execute("INSERT INTO sensors VALUES(?,?)",sensorId,locationId)
+            self.cursor.execute(query)
+            
+            # Remove from unknown events.
+            self.unknownSensorEvents.pop(sensorId, None)
         except Exception as ex:
             self.logger.warning(str(ex))
 
@@ -138,31 +143,43 @@ class Database:
     def getLocations(self):
         return self.cache.keys()
 
+    def getAllLocations(self):
+        result = [ location_name for (location_name,) in self.cursor.execute( 'SELECT location_name FROM locations;' ) ]
+        return result
+
     def handleEvent(self, event):
         if self.cacheEvent(event):
             self.storeEvent(event)
 
     def getLocationEvents(self,location,meastype):
-        result = []
-
         if len(meastype) != 0:
             key = (location,meastype)
 
             if key in self.cache:
-                result = list(self.cache[key])
+                for value in self.cache[ key ]:
+                    yield(value)    
         else:
-            for (loc,meas) in self.cache.keys():
-                if loc == location:
-                    result.extend( list(self.cache[(loc,meas)]) )
-        return result
+            for key in filter( lambda x : x[0] == location,self.cache.keys()):
+                for value in self.cache[ key ]:
+                    yield(value)    
 
-    def getAllEvents(self):
-        events = []
-        
+    def getLocationClassEvents(self, locationClass):
+        #self.logger.info(f"getLocationClassEvents {locationClass}")
+        query = f"select location_name from locations JOIN loctype USING (loctype_id) WHERE loctype_name=\"{locationClass}\";"
+        #self.logger.info(f"query={query}")
+
+        locations = [ location_name for (location_name,) in self.cursor.execute( query ) ]
+
+        #self.logger.info(f"locations={locations}")
+
+        keys =  filter( lambda x : x[0] in locations, self.cache.keys())
+        for key in keys:
+            for value in self.cache[ key ]:
+                yield(value)    
+
+    def getAllEvents(self):        
         for x in self.cache.values():
-            events.extend(list(x))
-
-        return events
+            yield(x)
 
     # Get min, max, latest for each location
     def getSummaryEvents(self):
@@ -180,8 +197,9 @@ class Database:
 
         try:
             self.logger.info("Write event to database.")
-            self.cursor.execute("INSERT INTO readings( timestamp,location_id,desc,value) VALUES(?,?,?,?)",\
-                (event.timestamp(),locationId,event.desc(),event.value()))
+            command = f"INSERT INTO readings( timestamp,location_id,desc,value) VALUES('{event.timestamp()}',{locationId},'{event.desc()}',{event.value()});"
+            self.logger.info(command)
+            self.cursor.execute(command)
         
         except Exception as ex:
             self.logger.warning(str(ex))
@@ -210,8 +228,10 @@ class Database:
 
             # Don't store duplicates
             if self.cache[ key ][-1].value() == event.value():
-                self.logger.debug(f"Duplicate; suppress store to DB")
-                storeToDB = False
+                # Special case Pressure, changes so little, logged every 15 mins.
+                if key[1] != "Pressure":
+                    self.logger.debug(f"Duplicate; suppress store to DB")
+                    storeToDB = False
  
         if storeToCache:
             self.logger.debug(f"Write to cache.")

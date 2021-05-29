@@ -50,6 +50,11 @@ class EventServerStub(object):
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 )
+        self.GetAllLocations = channel.unary_stream(
+                '/EventServer/GetAllLocations',
+                request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                response_deserializer=dsws__pb2.LocationName.FromString,
+                )
         self.GetLocations = channel.unary_stream(
                 '/EventServer/GetLocations',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
@@ -58,6 +63,11 @@ class EventServerStub(object):
         self.GetLocationEvents = channel.unary_stream(
                 '/EventServer/GetLocationEvents',
                 request_serializer=dsws__pb2.Location.SerializeToString,
+                response_deserializer=dsws__pb2.Event.FromString,
+                )
+        self.GetLocationClassEvents = channel.unary_stream(
+                '/EventServer/GetLocationClassEvents',
+                request_serializer=dsws__pb2.LocationClass.SerializeToString,
                 response_deserializer=dsws__pb2.Event.FromString,
                 )
         self.GetSummaryEvents = channel.unary_stream(
@@ -142,6 +152,12 @@ class EventServerServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def GetAllLocations(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def GetLocations(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -149,6 +165,12 @@ class EventServerServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetLocationEvents(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetLocationClassEvents(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -234,6 +256,11 @@ def add_EventServerServicer_to_server(servicer, server):
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
+            'GetAllLocations': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetAllLocations,
+                    request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                    response_serializer=dsws__pb2.LocationName.SerializeToString,
+            ),
             'GetLocations': grpc.unary_stream_rpc_method_handler(
                     servicer.GetLocations,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
@@ -242,6 +269,11 @@ def add_EventServerServicer_to_server(servicer, server):
             'GetLocationEvents': grpc.unary_stream_rpc_method_handler(
                     servicer.GetLocationEvents,
                     request_deserializer=dsws__pb2.Location.FromString,
+                    response_serializer=dsws__pb2.Event.SerializeToString,
+            ),
+            'GetLocationClassEvents': grpc.unary_stream_rpc_method_handler(
+                    servicer.GetLocationClassEvents,
+                    request_deserializer=dsws__pb2.LocationClass.FromString,
                     response_serializer=dsws__pb2.Event.SerializeToString,
             ),
             'GetSummaryEvents': grpc.unary_stream_rpc_method_handler(
@@ -409,6 +441,23 @@ class EventServer(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def GetAllLocations(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/EventServer/GetAllLocations',
+            google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+            dsws__pb2.LocationName.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def GetLocations(request,
             target,
             options=(),
@@ -438,6 +487,23 @@ class EventServer(object):
             metadata=None):
         return grpc.experimental.unary_stream(request, target, '/EventServer/GetLocationEvents',
             dsws__pb2.Location.SerializeToString,
+            dsws__pb2.Event.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def GetLocationClassEvents(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(request, target, '/EventServer/GetLocationClassEvents',
+            dsws__pb2.LocationClass.SerializeToString,
             dsws__pb2.Event.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

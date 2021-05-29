@@ -20,11 +20,75 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\ndsws.proto\x1a\x1bgoogle/protobuf/empty.proto\".\n\x08Location\x12\x10\n\x08Location\x18\x01 \x01(\t\x12\x10\n\x08MeasType\x18\x02 \x01(\t\"F\n\rLocationEvent\x12\x10\n\x08Location\x18\x01 \x01(\t\x12\x10\n\x08MeasType\x18\x02 \x01(\t\x12\x11\n\tMeasValue\x18\x03 \x01(\t\"B\n\x0bSensorEvent\x12\x0e\n\x06Sensor\x18\x01 \x01(\t\x12\x10\n\x08MeasType\x18\x02 \x01(\t\x12\x11\n\tMeasValue\x18\x03 \x01(\t\"P\n\x05\x45vent\x12\x10\n\x08\x44\x61teTime\x18\x01 \x01(\t\x12\x10\n\x08Location\x18\x02 \x01(\t\x12\x10\n\x08MeasType\x18\x03 \x01(\t\x12\x11\n\tMeasValue\x18\x04 \x01(\t\"\x1c\n\x08SensorId\x12\x10\n\x08SensorId\x18\x01 \x01(\t\"2\n\x0cSensorConfig\x12\x10\n\x08SensorId\x18\x01 \x01(\t\x12\x10\n\x08Location\x18\x02 \x01(\t\"B\n\nSensorInfo\x12\x10\n\x08SensorId\x18\x01 \x01(\t\x12\x10\n\x08Location\x18\x02 \x01(\t\x12\x10\n\x08LastSeen\x18\x03 \x01(\t2\x9d\x07\n\x0b\x45ventServer\x12=\n\x13NotifyLocationEvent\x12\x0e.LocationEvent\x1a\x16.google.protobuf.Empty\x12\x39\n\x11NotifySensorEvent\x12\x0c.SensorEvent\x1a\x16.google.protobuf.Empty\x12\x33\n\x0fGetLatestEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x34\n\x10GetMinimumEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x34\n\x10GetMaximumEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x34\n\x10GetUnknownEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x44\n\x12\x43learUnknownEvents\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12\x33\n\x0cGetLocations\x12\x16.google.protobuf.Empty\x1a\t.Location0\x01\x12(\n\x11GetLocationEvents\x12\t.Location\x1a\x06.Event0\x01\x12\x34\n\x10GetSummaryEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x30\n\x0cGetAllEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x31\n\x0c\x44\x65leteSensor\x12\t.SensorId\x1a\x16.google.protobuf.Empty\x12\x35\n\x0c\x43onfigSensor\x12\r.SensorConfig\x1a\x16.google.protobuf.Empty\x12G\n\x15\x44\x65leteClimeMetSensors\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12\x45\n\x13\x44\x65leteUnseenSensors\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12\x36\n\rGetSensorInfo\x12\x16.google.protobuf.Empty\x1a\x0b.SensorInfo0\x01\x62\x06proto3'
+  serialized_pb=b'\n\ndsws.proto\x1a\x1bgoogle/protobuf/empty.proto\"&\n\rLocationClass\x12\x15\n\rLocationClass\x18\x01 \x01(\t\" \n\x0cLocationName\x12\x10\n\x08Location\x18\x01 \x01(\t\".\n\x08Location\x12\x10\n\x08Location\x18\x01 \x01(\t\x12\x10\n\x08MeasType\x18\x02 \x01(\t\"F\n\rLocationEvent\x12\x10\n\x08Location\x18\x01 \x01(\t\x12\x10\n\x08MeasType\x18\x02 \x01(\t\x12\x11\n\tMeasValue\x18\x03 \x01(\t\"B\n\x0bSensorEvent\x12\x0e\n\x06Sensor\x18\x01 \x01(\t\x12\x10\n\x08MeasType\x18\x02 \x01(\t\x12\x11\n\tMeasValue\x18\x03 \x01(\t\"P\n\x05\x45vent\x12\x10\n\x08\x44\x61teTime\x18\x01 \x01(\t\x12\x10\n\x08Location\x18\x02 \x01(\t\x12\x10\n\x08MeasType\x18\x03 \x01(\t\x12\x11\n\tMeasValue\x18\x04 \x01(\t\"\x1c\n\x08SensorId\x12\x10\n\x08SensorId\x18\x01 \x01(\t\"2\n\x0cSensorConfig\x12\x10\n\x08SensorId\x18\x01 \x01(\t\x12\x10\n\x08Location\x18\x02 \x01(\t\"B\n\nSensorInfo\x12\x10\n\x08SensorId\x18\x01 \x01(\t\x12\x10\n\x08Location\x18\x02 \x01(\t\x12\x10\n\x08LastSeen\x18\x03 \x01(\t2\x8d\x08\n\x0b\x45ventServer\x12=\n\x13NotifyLocationEvent\x12\x0e.LocationEvent\x1a\x16.google.protobuf.Empty\x12\x39\n\x11NotifySensorEvent\x12\x0c.SensorEvent\x1a\x16.google.protobuf.Empty\x12\x33\n\x0fGetLatestEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x34\n\x10GetMinimumEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x34\n\x10GetMaximumEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x34\n\x10GetUnknownEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x44\n\x12\x43learUnknownEvents\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12:\n\x0fGetAllLocations\x12\x16.google.protobuf.Empty\x1a\r.LocationName0\x01\x12\x33\n\x0cGetLocations\x12\x16.google.protobuf.Empty\x1a\t.Location0\x01\x12(\n\x11GetLocationEvents\x12\t.Location\x1a\x06.Event0\x01\x12\x32\n\x16GetLocationClassEvents\x12\x0e.LocationClass\x1a\x06.Event0\x01\x12\x34\n\x10GetSummaryEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x30\n\x0cGetAllEvents\x12\x16.google.protobuf.Empty\x1a\x06.Event0\x01\x12\x31\n\x0c\x44\x65leteSensor\x12\t.SensorId\x1a\x16.google.protobuf.Empty\x12\x35\n\x0c\x43onfigSensor\x12\r.SensorConfig\x1a\x16.google.protobuf.Empty\x12G\n\x15\x44\x65leteClimeMetSensors\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12\x45\n\x13\x44\x65leteUnseenSensors\x12\x16.google.protobuf.Empty\x1a\x16.google.protobuf.Empty\x12\x36\n\rGetSensorInfo\x12\x16.google.protobuf.Empty\x1a\x0b.SensorInfo0\x01\x62\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_empty__pb2.DESCRIPTOR,])
 
 
+
+
+_LOCATIONCLASS = _descriptor.Descriptor(
+  name='LocationClass',
+  full_name='LocationClass',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='LocationClass', full_name='LocationClass.LocationClass', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=43,
+  serialized_end=81,
+)
+
+
+_LOCATIONNAME = _descriptor.Descriptor(
+  name='LocationName',
+  full_name='LocationName',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='Location', full_name='LocationName.Location', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=83,
+  serialized_end=115,
+)
 
 
 _LOCATION = _descriptor.Descriptor(
@@ -61,8 +125,8 @@ _LOCATION = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=43,
-  serialized_end=89,
+  serialized_start=117,
+  serialized_end=163,
 )
 
 
@@ -107,8 +171,8 @@ _LOCATIONEVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=91,
-  serialized_end=161,
+  serialized_start=165,
+  serialized_end=235,
 )
 
 
@@ -153,8 +217,8 @@ _SENSOREVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=163,
-  serialized_end=229,
+  serialized_start=237,
+  serialized_end=303,
 )
 
 
@@ -206,8 +270,8 @@ _EVENT = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=231,
-  serialized_end=311,
+  serialized_start=305,
+  serialized_end=385,
 )
 
 
@@ -238,8 +302,8 @@ _SENSORID = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=313,
-  serialized_end=341,
+  serialized_start=387,
+  serialized_end=415,
 )
 
 
@@ -277,8 +341,8 @@ _SENSORCONFIG = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=343,
-  serialized_end=393,
+  serialized_start=417,
+  serialized_end=467,
 )
 
 
@@ -323,10 +387,12 @@ _SENSORINFO = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=395,
-  serialized_end=461,
+  serialized_start=469,
+  serialized_end=535,
 )
 
+DESCRIPTOR.message_types_by_name['LocationClass'] = _LOCATIONCLASS
+DESCRIPTOR.message_types_by_name['LocationName'] = _LOCATIONNAME
 DESCRIPTOR.message_types_by_name['Location'] = _LOCATION
 DESCRIPTOR.message_types_by_name['LocationEvent'] = _LOCATIONEVENT
 DESCRIPTOR.message_types_by_name['SensorEvent'] = _SENSOREVENT
@@ -335,6 +401,20 @@ DESCRIPTOR.message_types_by_name['SensorId'] = _SENSORID
 DESCRIPTOR.message_types_by_name['SensorConfig'] = _SENSORCONFIG
 DESCRIPTOR.message_types_by_name['SensorInfo'] = _SENSORINFO
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+LocationClass = _reflection.GeneratedProtocolMessageType('LocationClass', (_message.Message,), {
+  'DESCRIPTOR' : _LOCATIONCLASS,
+  '__module__' : 'dsws_pb2'
+  # @@protoc_insertion_point(class_scope:LocationClass)
+  })
+_sym_db.RegisterMessage(LocationClass)
+
+LocationName = _reflection.GeneratedProtocolMessageType('LocationName', (_message.Message,), {
+  'DESCRIPTOR' : _LOCATIONNAME,
+  '__module__' : 'dsws_pb2'
+  # @@protoc_insertion_point(class_scope:LocationName)
+  })
+_sym_db.RegisterMessage(LocationName)
 
 Location = _reflection.GeneratedProtocolMessageType('Location', (_message.Message,), {
   'DESCRIPTOR' : _LOCATION,
@@ -394,8 +474,8 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=464,
-  serialized_end=1389,
+  serialized_start=538,
+  serialized_end=1575,
   methods=[
   _descriptor.MethodDescriptor(
     name='NotifyLocationEvent',
@@ -468,9 +548,19 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='GetAllLocations',
+    full_name='EventServer.GetAllLocations',
+    index=7,
+    containing_service=None,
+    input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
+    output_type=_LOCATIONNAME,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='GetLocations',
     full_name='EventServer.GetLocations',
-    index=7,
+    index=8,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=_LOCATION,
@@ -480,7 +570,7 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetLocationEvents',
     full_name='EventServer.GetLocationEvents',
-    index=8,
+    index=9,
     containing_service=None,
     input_type=_LOCATION,
     output_type=_EVENT,
@@ -488,9 +578,19 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
     create_key=_descriptor._internal_create_key,
   ),
   _descriptor.MethodDescriptor(
+    name='GetLocationClassEvents',
+    full_name='EventServer.GetLocationClassEvents',
+    index=10,
+    containing_service=None,
+    input_type=_LOCATIONCLASS,
+    output_type=_EVENT,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
     name='GetSummaryEvents',
     full_name='EventServer.GetSummaryEvents',
-    index=9,
+    index=11,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=_EVENT,
@@ -500,7 +600,7 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetAllEvents',
     full_name='EventServer.GetAllEvents',
-    index=10,
+    index=12,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=_EVENT,
@@ -510,7 +610,7 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='DeleteSensor',
     full_name='EventServer.DeleteSensor',
-    index=11,
+    index=13,
     containing_service=None,
     input_type=_SENSORID,
     output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -520,7 +620,7 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='ConfigSensor',
     full_name='EventServer.ConfigSensor',
-    index=12,
+    index=14,
     containing_service=None,
     input_type=_SENSORCONFIG,
     output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -530,7 +630,7 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='DeleteClimeMetSensors',
     full_name='EventServer.DeleteClimeMetSensors',
-    index=13,
+    index=15,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -540,7 +640,7 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='DeleteUnseenSensors',
     full_name='EventServer.DeleteUnseenSensors',
-    index=14,
+    index=16,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
@@ -550,7 +650,7 @@ _EVENTSERVER = _descriptor.ServiceDescriptor(
   _descriptor.MethodDescriptor(
     name='GetSensorInfo',
     full_name='EventServer.GetSensorInfo',
-    index=15,
+    index=17,
     containing_service=None,
     input_type=google_dot_protobuf_dot_empty__pb2._EMPTY,
     output_type=_SENSORINFO,

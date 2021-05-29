@@ -1,6 +1,7 @@
 
+.DEFAULT_GOAL := all
 
-dsws: dsps.proto
+dsws:
 	python -m grpc_tools.protoc -I. --python_out=.  --grpc_python_out=. dsws.proto
 
 

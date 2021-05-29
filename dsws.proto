@@ -10,8 +10,10 @@ service EventServer {
     rpc GetMaximumEvents(google.protobuf.Empty) returns (stream Event);
     rpc GetUnknownEvents(google.protobuf.Empty) returns (stream Event);
     rpc ClearUnknownEvents(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc GetAllLocations(google.protobuf.Empty) returns (stream LocationName);
     rpc GetLocations(google.protobuf.Empty) returns (stream Location);
     rpc GetLocationEvents(Location) returns (stream Event);
+    rpc GetLocationClassEvents(LocationClass) returns (stream Event);
     rpc GetSummaryEvents(google.protobuf.Empty) returns (stream Event);
     rpc GetAllEvents(google.protobuf.Empty) returns (stream Event);
     rpc DeleteSensor(SensorId) returns (google.protobuf.Empty);
@@ -19,6 +21,14 @@ service EventServer {
     rpc DeleteClimeMetSensors(google.protobuf.Empty) returns (google.protobuf.Empty);
     rpc DeleteUnseenSensors(google.protobuf.Empty) returns (google.protobuf.Empty);
     rpc GetSensorInfo(google.protobuf.Empty) returns (stream SensorInfo);
+}
+
+message LocationClass {
+    string LocationClass = 1;
+}
+
+message LocationName {
+    string Location = 1;
 }
 
 message Location {

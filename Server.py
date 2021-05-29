@@ -13,6 +13,8 @@ from Database import Database
 from Event import Event
 
 SERVER_ID = 1
+LogLevels = { "CRITICAL" : 50, "ERROR" : 40, "WARNING" : 30, "INFO" : 20, "DEBUG" : 10 }
+
 
 empty = google_dot_protobuf_dot_empty__pb2.Empty()
 
@@ -34,15 +36,15 @@ class EventHandler(dsws_pb2_grpc.EventServer):
         return empty
 
     def NotifySensorEvent(self,request,context):
-        logging.info("NotifySensorEvent")
-        locationId = self.database.getSensorLocationId(request.Sensor)
-        if locationId == 0:
+        locationName = self.database.getSensorLocationName(request.Sensor)
+        if locationName == 'Unknown':
             logging.warning(f"Unknown sensor id {request.Sensor}")
             event = Event( location = request.Sensor, desc=request.MeasType, value=request.MeasValue)
+            logging.info("Sensor Event Received " + str(event))
             self.database.storeUnknownEvent(event)
         else:
-            event = Event( location = locationId, desc=request.MeasType, value=request.MeasValue)
-            logging.debug("Sensor Event Received " + str(event))
+            event = Event( location = locationName, desc=request.MeasType, value=request.MeasValue)
+            logging.info("Sensor Event Received " + str(event))
             self.database.handleEvent(event)
 
         return empty
@@ -75,6 +77,12 @@ class EventHandler(dsws_pb2_grpc.EventServer):
         self.database.clearUnknownEvents()
         return empty
 
+    def GetAllLocations(self,response,context):
+        def response_messages():
+            for location in self.database.getAllLocations():
+                yield dsws_pb2.LocationName(Location = location)
+        return response_messages()
+
     def GetLocations(self,response,context):
         def response_messages():
             for location in self.database.getLocations():
@@ -87,6 +95,12 @@ class EventHandler(dsws_pb2_grpc.EventServer):
     def GetLocationEvents(self,request,context):
         def response_messages():
             for e in self.database.getLocationEvents(request.Location, request.MeasType):
+                yield EventHandler.makeGrpcEvent( e )
+        return response_messages()
+
+    def GetLocationClassEvents(self,request,context):
+        def response_messages():
+            for e in self.database.getLocationClassEvents( request.LocationClass ):
                 yield EventHandler.makeGrpcEvent( e )
         return response_messages()
 
@@ -104,7 +118,7 @@ class EventHandler(dsws_pb2_grpc.EventServer):
         return response_messages()
 
     def ConfigSensor( self,request,context):
-
+        self.database.createSensor(request.SensorId,request.Location)
         return empty
 
     def DeleteSensor( self,request,context):
@@ -140,11 +154,12 @@ def serve(port,database):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--database", help="Database Path",default="D:\Pi\OldWebServerBackups\var\local\events.db")
+    parser.add_argument("-d", "--database", help="Database Path",default="/var/local/events.db")
     parser.add_argument("-p", "--port", type=int, help="Server Port", default=50051)
+    parser.add_argument("-l", "--log-level", dest="log_level", default="WARNING",choices=LogLevels.keys(),help="Set Python logging level")
     args = parser.parse_args()
 
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=LogLevels[args.log_level])
 
     database = Database( args.database )
 
