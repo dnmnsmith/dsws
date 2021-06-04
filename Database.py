@@ -185,9 +185,10 @@ class Database:
     def getSummaryEvents(self):
         events = []
         for k in self.cache.keys():
-            events.append(self.minmax[k][0])
-            events.append(self.minmax[k][1])
-            events.append(self.cache[k][-1])
+            if len(self.cache[k]) > 0 and len(self.minmax[k]) > 0:
+                events.append(self.minmax[k][0])
+                events.append(self.minmax[k][1])
+                events.append(self.cache[k][-1])
         return events
 
     def storeEvent(self,event):
@@ -325,7 +326,7 @@ class Database:
         self.logger.debug(f"initCache complete")
 
     def getLatestEvents(self):
-        return [ x[-1] for x in self.cache.values() ]
+        return [ x[-1] for x in filter( lambda x: len(x) > 0, self.cache.values()) ]
 
     def getLocations(self):
         return self.cache.keys()

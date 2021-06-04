@@ -1,6 +1,8 @@
 from concurrent import futures
 import logging
 import argparse
+from mqttEventListener import mqttListener
+import threading
 
 import grpc
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
@@ -150,6 +152,10 @@ def serve(port,database):
     server.add_insecure_port('[::]:{}'.format(port))
     print("Starting server on port {}".format(port))
     server.start()
+
+    mqttThread = threading.Thread(target=mqttListener, args=("localhost",port))
+    mqttThread.start()
+
     server.wait_for_termination()
 
 def main():
